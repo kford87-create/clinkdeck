@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Header from "./components/Header";
+
+const GOOGLE_ADS_TAG_ID = "AW-18156684082";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,6 +57,22 @@ export default function RootLayout({
           </div>
         </footer>
         <Analytics />
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_TAG_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-ads-gtag" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GOOGLE_ADS_TAG_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
