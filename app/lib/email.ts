@@ -87,8 +87,7 @@ async function deliver({
     return;
   }
 
-  const fromAddress =
-    process.env.RESEND_FROM ?? "Clinkdeck <onboarding@resend.dev>";
+  const fromAddress = resolveFromAddress();
 
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -116,6 +115,17 @@ async function deliver({
 /** Defensive CRLF strip on user-controlled values used in email subjects/bodies. */
 function strip(s: string) {
   return s.replace(/[\r\n]+/g, " ");
+}
+
+function resolveFromAddress() {
+  const fromEnv = process.env.RESEND_FROM;
+  if (fromEnv) return fromEnv;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "RESEND_FROM is not set in production. Set it to a verified Resend domain address (e.g. 'Clinkdeck <hello@clinkdeck.com>')."
+    );
+  }
+  return "Clinkdeck <onboarding@resend.dev>";
 }
 
 function appUrl() {
