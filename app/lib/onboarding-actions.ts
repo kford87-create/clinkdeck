@@ -90,5 +90,6 @@ export async function completeOnboarding(
   }
 
   revalidatePath("/", "layout");
-  redirect(`/c/${handle}`);
+  // ?signup=1 triggers the Google Ads signup conversion on the profile page.
+  redirect(`/c/${handle}?signup=1`);
 }

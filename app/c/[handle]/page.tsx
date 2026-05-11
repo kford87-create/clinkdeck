@@ -3,11 +3,15 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/app/lib/prisma";
 import { getCurrentUser } from "@/app/lib/auth";
 import ListingCard from "@/app/components/ListingCard";
+import ConversionTracker from "@/app/components/ConversionTracker";
 
 export default async function CreatorProfile(
   props: PageProps<"/c/[handle]">
 ) {
   const { handle } = await props.params;
+  const sp = await props.searchParams;
+  const justSignedUp = sp.signup === "1";
+  const signupConversionLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_SIGNUP_LABEL;
   const me = await getCurrentUser();
   const creator = await prisma.user.findUnique({
     where: { handle },
@@ -24,6 +28,9 @@ export default async function CreatorProfile(
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8">
+      {justSignedUp && signupConversionLabel && (
+        <ConversionTracker sendTo={signupConversionLabel} />
+      )}
       <div
         className="rounded-2xl mb-6 p-6 sm:p-8"
         style={{

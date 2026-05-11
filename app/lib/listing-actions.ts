@@ -115,7 +115,8 @@ export async function createListing(
 
   revalidatePath("/");
   revalidatePath(`/c/${me.handle}`);
-  redirect(`/l/${listing.slug}`);
+  // ?published=1 triggers the Google Ads publish conversion on the listing page.
+  redirect(`/l/${listing.slug}?published=1`);
 }
 
 export async function updateListing(

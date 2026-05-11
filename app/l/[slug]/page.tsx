@@ -7,6 +7,7 @@ import DeleteListingButton from "@/app/components/DeleteListingButton";
 import InquiryForm from "@/app/components/InquiryForm";
 import ShareButton from "@/app/components/ShareButton";
 import Visual from "@/app/components/visuals/Visual";
+import ConversionTracker from "@/app/components/ConversionTracker";
 import { ARCHETYPE_META, type Archetype } from "@/app/lib/archetypes";
 
 export async function generateMetadata(
@@ -38,6 +39,9 @@ export async function generateMetadata(
 
 export default async function ListingPage(props: PageProps<"/l/[slug]">) {
   const { slug } = await props.params;
+  const sp = await props.searchParams;
+  const justPublished = sp.published === "1";
+  const publishConversionLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_PUBLISH_LABEL;
   const me = await getCurrentUser();
   const listing = await prisma.listing.findUnique({
     where: { slug },
@@ -60,6 +64,9 @@ export default async function ListingPage(props: PageProps<"/l/[slug]">) {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-8">
+      {justPublished && publishConversionLabel && (
+        <ConversionTracker sendTo={publishConversionLabel} />
+      )}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
