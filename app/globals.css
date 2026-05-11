@@ -22,5 +22,85 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ----- Visual archetype animations ----- */
+
+/* TRIAGE: items flowing left → agent → bucket. 6s loop staggered across 3 items. */
+@keyframes triageItem {
+  0%   { transform: translateX(-15%) translateY(0); opacity: 0; }
+  10%  { opacity: 1; }
+  35%  { transform: translateX(45%) translateY(0); opacity: 1; }
+  55%  { transform: translateX(45%) translateY(0); opacity: 1; }
+  75%  { transform: translateX(95%) translateY(var(--y, 0px)); opacity: 1; }
+  90%  { opacity: 0; }
+  100% { transform: translateX(95%) translateY(var(--y, 0px)); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+}
+
+/* PIPELINE: dot moving along a horizontal track. */
+@keyframes pipelineDot {
+  0%   { transform: translateX(0); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { transform: translateX(var(--end, 100%)); opacity: 0; }
+}
+
+/* SCORE_ROUTE: item enters, score fades in, then routes into a lane. */
+@keyframes scoreItem {
+  0%   { transform: translateX(-20%) translateY(0); opacity: 0; }
+  15%  { transform: translateX(40%) translateY(0); opacity: 1; }
+  45%  { transform: translateX(40%) translateY(0); opacity: 1; }
+  80%  { transform: translateX(95%) translateY(var(--y, 0px)); opacity: 1; }
+  100% { transform: translateX(95%) translateY(var(--y, 0px)); opacity: 0; }
+}
+
+@keyframes scoreBadge {
+  0%, 15% { opacity: 0; transform: translateY(8px) scale(0.8); }
+  30%, 70% { opacity: 1; transform: translateY(0) scale(1); }
+  85%, 100% { opacity: 0; transform: translateY(-8px) scale(0.9); }
+}
+
+/* VOICE_LOOP: speech bubbles ping-ponging between two avatars. */
+@keyframes voiceUserBubble {
+  0%, 5%   { opacity: 0; transform: translateY(8px) scale(0.85); }
+  10%, 35% { opacity: 1; transform: translateY(0) scale(1); }
+  40%, 100% { opacity: 0; transform: translateY(-8px) scale(0.95); }
+}
+@keyframes voiceThinking {
+  0%, 35%  { opacity: 0; }
+  40%, 55% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+@keyframes voiceAgentBubble {
+  0%, 55%  { opacity: 0; transform: translateY(8px) scale(0.85); }
+  60%, 90% { opacity: 1; transform: translateY(0) scale(1); }
+  95%, 100% { opacity: 0; transform: translateY(-8px) scale(0.95); }
+}
+@keyframes voiceDot {
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+/* GENERATIVE: prompt → expanding cloud → artifact. */
+@keyframes genCloud {
+  0%   { transform: scale(0.4); opacity: 0; }
+  20%  { opacity: 0.85; }
+  60%  { transform: scale(1.2); opacity: 0.85; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+@keyframes genParticle {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translate(var(--dx, 30px), var(--dy, -20px)); opacity: 0; }
+}
+@keyframes genArtifact {
+  0%, 50%   { opacity: 0; transform: scale(0.85) translateY(10px); }
+  70%, 95%  { opacity: 1; transform: scale(1) translateY(0); }
+  100%      { opacity: 0; }
 }
