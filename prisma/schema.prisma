@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  handle      String   @unique
+  name        String
+  bio         String?
+  avatarColor String   @default("#f43f5e")
+  websiteUrl  String?
+  calLink     String?
+  // True until the user completes /onboarding (sets a real handle).
+  onboarded   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  listings      Listing[]
+  inquiriesSent Inquiry[]        @relation("BuyerInquiries")
+  inquiriesGot  Inquiry[]        @relation("CreatorInquiries")
+  messages      InquiryMessage[]
+  sessions      Session[]
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  lastUsedAt DateTime @default(now())
+  userAgent  String?
+}
+
+model MagicLink {
+  // We store the SHA-256 hash of the token, never the raw token.
+  tokenHash  String   @id
+  email      String
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+}
+
+model Listing {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  summary     String
+
+  problem     String
+  builtWith   String
+  buildTime   String
+  hardestPart String
+
+  archetype    String
+  visualLabels String
+  themeColor   String  @default("#0ea5e9")
+
+  tags     String  @default("")
+
+  status        String    @default("PUBLISHED")
+  featuredUntil DateTime?
+
+  creatorId String
+  creator   User      @relation(fields: [creatorId], references: [id])
+  inquiries Inquiry[]
+  createdAt DateTime  @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  listingId String
+  buyerId   String
+  creatorId String
+  subject   String
+  budget    String
+  timeline  String
+  goal      String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+
+  listing  Listing          @relation(fields: [listingId], references: [id])
+  buyer    User             @relation("BuyerInquiries", fields: [buyerId], references: [id])
+  creator  User             @relation("CreatorInquiries", fields: [creatorId], references: [id])
+  messages InquiryMessage[]
+}
+
+model InquiryMessage {
+  id        String   @id @default(cuid())
+  inquiryId String
+  senderId  String
+  body      String
+  createdAt DateTime @default(now())
+
+  inquiry Inquiry @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  sender  User    @relation(fields: [senderId], references: [id])
+}
