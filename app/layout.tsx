@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Header from "./components/Header";
 
@@ -42,10 +43,17 @@ export default function RootLayout({
               <a href="/terms" className="hover:text-zinc-900 dark:hover:text-zinc-200">
                 Terms
               </a>
+              <a
+                href="mailto:hello@clinkdeck.com?subject=Clinkdeck%20feedback"
+                className="hover:text-zinc-900 dark:hover:text-zinc-200"
+              >
+                Feedback
+              </a>
             </div>
             <span>A showcase, not a marketplace. No payments handled here.</span>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
