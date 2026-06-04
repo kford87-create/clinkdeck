@@ -22,7 +22,7 @@ export default function SignInForm() {
           required
           placeholder="you@example.com"
           aria-invalid={fieldErr ? true : undefined}
-          className={`w-full px-3 py-2 rounded-lg border bg-white dark:bg-zinc-950 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+          className={`w-full px-3 py-2 rounded-lg border bg-white dark:bg-zinc-950 text-sm focus:outline-none focus:ring-2 focus:ring-[#4285F4] ${
             fieldErr
               ? "border-rose-500"
               : "border-zinc-300 dark:border-zinc-700"
@@ -42,7 +42,7 @@ export default function SignInForm() {
       <button
         type="submit"
         disabled={pending}
-        className="w-full px-4 py-2.5 rounded-lg bg-teal-600 text-white font-medium hover:bg-teal-700 disabled:opacity-50"
+        className="w-full px-4 py-2.5 rounded-lg bg-[#4285F4] text-white font-medium hover:brightness-110 disabled:opacity-50"
       >
         {pending ? "Sending link…" : "Email me a sign-in link"}
       </button>

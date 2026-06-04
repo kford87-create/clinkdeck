@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Force selector-based dark mode (the whole storefront is dark). With this,
+   every Tailwind `dark:` utility on the inner pages activates because <html>
+   carries the `dark` class — no dependence on the OS color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #07080d;
   --foreground: #f4f6fb;
