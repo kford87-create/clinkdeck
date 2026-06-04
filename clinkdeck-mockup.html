@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clinkdeck — Google products, sold right</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#07080d; --bg-2:#0c0e16; --panel:rgba(255,255,255,.04);
+    --line:rgba(255,255,255,.09); --text:#f4f6fb; --muted:#9aa3b5;
+    --g-blue:#4285F4; --g-red:#EA4335; --g-yellow:#FBBC05; --g-green:#34A853;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  /* ambient glows */
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(600px 400px at 12% -5%, rgba(66,133,244,.22), transparent 60%),
+      radial-gradient(560px 420px at 92% 8%, rgba(234,67,53,.14), transparent 60%),
+      radial-gradient(700px 500px at 60% 110%, rgba(52,168,83,.14), transparent 60%);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  .grad{background:linear-gradient(100deg,var(--g-blue),var(--g-green) 45%,var(--g-yellow) 70%,var(--g-red));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid var(--line);
+    border-radius:999px;background:var(--panel);font-size:13px;color:var(--muted);font-weight:500}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--g-green);box-shadow:0 0 12px var(--g-green)}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;
+    font-weight:600;font-size:15px;transition:.2s;border:1px solid transparent;cursor:pointer}
+  .btn-primary{background:#fff;color:#0a0a0a}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(66,133,244,.35)}
+  .btn-ghost{background:var(--panel);border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08)}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:rgba(7,8,13,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+  .logo{width:30px;height:30px;border-radius:9px;
+    background:conic-gradient(from 220deg,var(--g-blue),var(--g-green),var(--g-yellow),var(--g-red),var(--g-blue))}
+  .nav-links{display:flex;gap:30px;font-size:15px;color:var(--muted);font-weight:500}
+  .nav-links a:hover{color:#fff}
+  .nav-cta{display:flex;gap:12px;align-items:center}
+  @media(max-width:860px){.nav-links{display:none}.nav-cta .btn-ghost{display:none}}
+
+  /* HERO */
+  .hero{text-align:center;padding:88px 0 64px}
+  .hero h1{font-size:clamp(38px,6vw,68px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin:22px 0}
+  .hero p.sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:660px;margin:0 auto 32px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .rating{margin-top:26px;color:var(--muted);font-size:14px;display:flex;gap:8px;justify-content:center;align-items:center}
+  .stars{color:var(--g-yellow);letter-spacing:2px}
+
+  /* TRUST BAR */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-top:40px}
+  .trust-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.8}
+
+  /* SECTION */
+  section{padding:84px 0}
+  .eyebrow{color:var(--g-blue);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;text-align:center}
+  .h2{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-.02em;text-align:center;margin:12px 0 14px}
+  .lead{color:var(--muted);text-align:center;max-width:620px;margin:0 auto 50px;font-size:17px}
+
+  /* PILLAR CARDS */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px;
+    transition:.25s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+  .card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:18px;border:1px solid var(--line)}
+  .ic.blue{background:rgba(66,133,244,.15)} .ic.green{background:rgba(52,168,83,.15)} .ic.multi{background:rgba(251,188,5,.12)}
+  .card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px;margin-bottom:16px}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:14px;color:#cdd3e0}
+  .card li::before{content:"\2713";color:var(--g-green);font-weight:700;margin-right:9px}
+  .card .more{margin-top:18px;color:var(--g-blue);font-weight:600;font-size:14px}
+  @media(max-width:860px){.pillars{grid-template-columns:1fr}}
+
+  /* FEATURE GRID */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .feat{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .feat .fic{font-size:20px;margin-bottom:12px}
+  .feat h4{font-size:16px;margin-bottom:6px}
+  .feat p{color:var(--muted);font-size:14px}
+  @media(max-width:860px){.features{grid-template-columns:1fr}}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+    background:linear-gradient(180deg,rgba(66,133,244,.07),transparent);
+    border:1px solid var(--line);border-radius:var(--radius);padding:40px 24px}
+  .stat{text-align:center}
+  .stat .num{font-size:clamp(30px,4vw,44px);font-weight:800;letter-spacing:-.02em}
+  .stat .lbl{color:var(--muted);font-size:14px;margin-top:4px}
+  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* STEPS */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{padding:28px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+  .step .n{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-weight:800;
+    background:linear-gradient(135deg,var(--g-blue),var(--g-green));margin-bottom:16px}
+  .step h4{font-size:18px;margin-bottom:8px}
+  .step p{color:var(--muted);font-size:15px}
+  @media(max-width:860px){.steps{grid-template-columns:1fr}}
+
+  /* PRICING */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+  .price.pop{border-color:var(--g-blue);box-shadow:0 0 0 1px var(--g-blue),0 20px 60px rgba(66,133,244,.18)}
+  .price .tag{font-size:13px;color:var(--g-blue);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .price .amt{font-size:40px;font-weight:800;margin:10px 0 2px}
+  .price .amt span{font-size:15px;color:var(--muted);font-weight:500}
+  .price .pname{font-size:18px;font-weight:700;margin-bottom:6px}
+  .price ul{list-style:none;margin:20px 0;display:flex;flex-direction:column;gap:11px;font-size:14px;color:#cdd3e0}
+  .price li::before{content:"\2713";color:var(--g-green);font-weight:700;margin-right:9px}
+  .badge-pop{float:right;background:var(--g-blue);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
+  .price .btn{width:100%;justify-content:center;margin-top:6px}
+  @media(max-width:860px){.prices{grid-template-columns:1fr}}
+
+  /* TESTIMONIALS */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .quote{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .quote p{font-size:15px;margin-bottom:18px}
+  .who{display:flex;align-items:center;gap:12px}
+  .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--g-blue),var(--g-red))}
+  .who .nm{font-weight:600;font-size:14px}.who .rl{color:var(--muted);font-size:13px}
+  @media(max-width:860px){.quotes{grid-template-columns:1fr}}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  details{border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin-bottom:12px;background:var(--panel)}
+  details summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details summary::after{content:"+";color:var(--g-blue);font-size:22px;font-weight:400}
+  details[open] summary::after{content:"\2013"}
+  details p{color:var(--muted);margin-top:12px;font-size:15px}
+
+  /* CTA */
+  .cta-band{text-align:center;border:1px solid var(--line);border-radius:26px;padding:64px 24px;
+    background:radial-gradient(700px 300px at 50% 0%,rgba(66,133,244,.18),transparent 70%),var(--bg-2)}
+  .cta-band h2{font-size:clamp(30px,4.5vw,46px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+  .cta-band p{color:var(--muted);max-width:520px;margin:0 auto 28px;font-size:17px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:54px 0 40px;margin-top:80px;color:var(--muted);font-size:14px}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+  .foot h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+  .foot a{display:block;margin-bottom:9px}.foot a:hover{color:#fff}
+  .foot .brand{margin-bottom:12px}
+  .legal{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px}
+  @media(max-width:860px){.foot{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav">
+    <div class="brand"><span class="logo"></span> Clinkdeck</div>
+    <div class="nav-links">
+      <a href="#chrome">Chrome</a><a href="#cloud">Cloud</a>
+      <a href="#marketplace">Marketplace</a><a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#">Sign in</a>
+      <a class="btn btn-primary" href="#">Get a quote</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <span class="pill"><span class="dot"></span> Google Cloud Partner &mdash; verification in progress</span>
+  <h1>Buy Google products<br><span class="grad">from people who get Google.</span></h1>
+  <p class="sub">Clinkdeck is your single storefront for Google Chrome, Google Cloud, and Google Workspace Marketplace products &mdash; licensed, provisioned, and supported by an authorized reseller.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#chrome">Browse the catalog &rarr;</a>
+    <a class="btn btn-ghost" href="#cloud">Talk to a specialist</a>
+  </div>
+  <div class="rating"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.9 / 5 &mdash; trusted by 400+ growing teams</div>
+</header>
+
+<div class="trust">
+  <div class="wrap trust-row">
+    <span>Chrome Enterprise</span><span>Google Cloud</span><span>Workspace</span>
+    <span>ChromeOS</span><span>Marketplace Apps</span>
+  </div>
+</div>
+
+<section id="chrome">
+  <p class="eyebrow">Three product families. One vendor.</p>
+  <h2 class="h2">Everything Google, in one place</h2>
+  <p class="lead">Skip the procurement maze. License, deploy, and manage across the entire Google ecosystem with a single partner and a single invoice.</p>
+  <div class="wrap" style="padding:0"><div class="pillars">
+    <div class="card">
+      <div class="ic blue">&#127760;</div>
+      <h3>Google Chrome</h3>
+      <p>Chrome Enterprise, ChromeOS devices, and browser management at scale.</p>
+      <ul><li>Chrome Enterprise Premium</li><li>ChromeOS &amp; Chromebook fleets</li><li>Central browser policy management</li></ul>
+      <div class="more">Explore Chrome &rarr;</div>
+    </div>
+    <div class="card" id="cloud">
+      <div class="ic green">&#9729;</div>
+      <h3>Google Cloud</h3>
+      <p>GCP infrastructure plus Google Workspace, sized and billed for your team.</p>
+      <ul><li>Compute, storage &amp; networking</li><li>Workspace Business &amp; Enterprise</li><li>Committed-use &amp; cost optimization</li></ul>
+      <div class="more">Explore Cloud &rarr;</div>
+    </div>
+    <div class="card" id="marketplace">
+      <div class="ic multi">&#129513;</div>
+      <h3>Google Marketplace</h3>
+      <p>Vetted Workspace Marketplace apps that plug straight into your domain.</p>
+      <ul><li>Security &amp; productivity add-ons</li><li>One-click domain-wide install</li><li>Consolidated billing &amp; support</li></ul>
+      <div class="more">Explore Marketplace &rarr;</div>
+    </div>
+  </div></div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap" style="padding:0"><div class="features">
+    <div class="feat"><div class="fic">&#129309;</div><h4>Authorized reseller</h4><p>Bought through official Google partner channels &mdash; genuine licenses, full warranty.</p></div>
+    <div class="feat"><div class="fic">&#129534;</div><h4>One consolidated invoice</h4><p>Chrome, Cloud, and Marketplace on a single, predictable monthly bill.</p></div>
+    <div class="feat"><div class="fic">&#9889;</div><h4>Same-day provisioning</h4><p>Licenses and devices activated fast, so your team isn't waiting on access.</p></div>
+    <div class="feat"><div class="fic">&#128737;</div><h4>Hands-on migration</h4><p>We help you move domains, devices, and data without the downtime.</p></div>
+    <div class="feat"><div class="fic">&#128200;</div><h4>Cost optimization</h4><p>Right-size seats and cloud spend with reviews from real specialists.</p></div>
+    <div class="feat"><div class="fic">&#128172;</div><h4>Human support</h4><p>A named account contact &mdash; not a ticket queue &mdash; for the whole lifecycle.</p></div>
+  </div></div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap" style="padding:0">
+    <div class="stats">
+      <div class="stat"><div class="num grad">400+</div><div class="lbl">Teams provisioned</div></div>
+      <div class="stat"><div class="num grad">15k+</div><div class="lbl">Seats under management</div></div>
+      <div class="stat"><div class="num grad">99.9%</div><div class="lbl">License accuracy</div></div>
+      <div class="stat"><div class="num grad">&lt;1 day</div><div class="lbl">Avg. activation time</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">How it works</p>
+  <h2 class="h2">From quote to live in three steps</h2>
+  <div class="wrap" style="padding:0"><div class="steps">
+    <div class="step"><div class="n">1</div><h4>Tell us what you need</h4><p>Share your team size and goals. We build a tailored quote across Chrome, Cloud, and Marketplace.</p></div>
+    <div class="step"><div class="n">2</div><h4>We provision &amp; migrate</h4><p>Licenses activated, devices enrolled, data migrated &mdash; handled by our specialists end to end.</p></div>
+    <div class="step"><div class="n">3</div><h4>Manage &amp; scale</h4><p>One dashboard, one invoice, one support contact. Add or remove seats whenever you grow.</p></div>
+  </div></div>
+</section>
+
+<section>
+  <p class="eyebrow">Customers</p>
+  <h2 class="h2">Teams that switched to Clinkdeck</h2>
+  <div class="wrap" style="padding:0"><div class="quotes">
+    <div class="quote"><p>"Moved our whole org to Workspace and Chrome Enterprise in a weekend. One invoice instead of five."</p><div class="who"><div class="av"></div><div><div class="nm">Maya R.</div><div class="rl">COO, Northwind Labs</div></div></div></div>
+    <div class="quote"><p>"They right-sized our GCP spend and cut 22% in the first quarter. Actual humans who pick up the phone."</p><div class="who"><div class="av"></div><div><div class="nm">Dax P.</div><div class="rl">Head of IT, Lumen Co</div></div></div></div>
+    <div class="quote"><p>"Provisioned 300 Chromebooks and the Marketplace apps we needed in two days. Effortless."</p><div class="who"><div class="av"></div><div><div class="nm">Priya S.</div><div class="rl">Ops Lead, Bright Academy</div></div></div></div>
+  </div></div>
+</section>
+
+<section id="faq">
+  <p class="eyebrow">FAQ</p>
+  <h2 class="h2">Questions, answered</h2>
+  <div class="faq">
+    <details open><summary>Are these genuine Google licenses?</summary><p>Yes. Every license is sourced through official Google partner channels with full warranty and support entitlements.</p></details>
+    <details><summary>Are you an authorized Google reseller?</summary><p>We're in the final stages of Google reseller verification. Your products are fulfilled through authorized channels throughout.</p></details>
+    <details><summary>Can I buy Chrome, Cloud, and Marketplace together?</summary><p>That's the point of Clinkdeck &mdash; mix products across all three families and receive a single consolidated invoice.</p></details>
+    <details><summary>Do you help with migration?</summary><p>On Growth and Enterprise tiers we handle domain, device, and data migration end to end with zero downtime as the goal.</p></details>
+    <details><summary>How is billing handled?</summary><p>Product licenses are billed at Google rates; service tiers add a flat monthly fee. One predictable invoice, monthly.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="padding:0">
+    <div class="cta-band">
+      <h2>Ready to simplify your Google stack?</h2>
+      <p>Get a tailored quote across Chrome, Cloud, and Marketplace in under 24 hours.</p>
+      <div class="hero-cta"><a class="btn btn-primary" href="#">Get a quote &rarr;</a><a class="btn btn-ghost" href="#">Book a call</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="brand"><span class="logo"></span> Clinkdeck</div>
+        <p style="max-width:260px">Your authorized storefront for Google Chrome, Cloud, and Marketplace products.</p>
+      </div>
+      <div><h5>Products</h5><a href="#chrome">Chrome</a><a href="#cloud">Cloud</a><a href="#marketplace">Marketplace</a></div>
+      <div><h5>Company</h5><a href="#">About</a><a href="#">Contact</a><a href="#">Support</a><a href="#">Status</a></div>
+      <div><h5>Legal</h5><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Reseller disclosure</a></div>
+    </div>
+    <div class="legal">
+      <span>&copy; 2026 Clinkdeck. Google, Chrome, Google Cloud and related marks are trademarks of Google LLC.</span>
+      <span>hello@clinkdeck.com</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
