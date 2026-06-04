@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Clinkdeck — where AI builders showcase their talent",
+  title: "Clinkdeck — Google Chrome, Cloud & Marketplace products",
   description:
-    "A showcase platform for AI builders. Every build comes with an animated visual that shows what it does in ten seconds.",
+    "Your single storefront for Google Chrome, Google Cloud, and Google Workspace Marketplace products. Clinkdeck is in the process of becoming an authorized Google reseller.",
 };
 
 export default function RootLayout({
@@ -33,27 +33,47 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
+      <body className="min-h-full flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mt-auto">
-          <div className="max-w-6xl mx-auto px-6 py-4 text-xs text-zinc-500 flex flex-col sm:flex-row sm:justify-between gap-2">
-            <div className="flex gap-4">
-              <span>Clinkdeck</span>
-              <a href="/privacy" className="hover:text-zinc-900 dark:hover:text-zinc-200">
-                Privacy
-              </a>
-              <a href="/terms" className="hover:text-zinc-900 dark:hover:text-zinc-200">
-                Terms
-              </a>
-              <a
-                href="mailto:hello@clinkdeck.com?subject=Clinkdeck%20feedback"
-                className="hover:text-zinc-900 dark:hover:text-zinc-200"
-              >
-                Feedback
-              </a>
+        <footer className="sf-footer">
+          <div className="wrap">
+            <div className="foot">
+              <div>
+                <div className="brand">
+                  <span className="logo" /> Clinkdeck
+                </div>
+                <p style={{ maxWidth: 260 }}>
+                  Your storefront for Google Chrome, Cloud, and Marketplace products.
+                  Authorized-reseller verification in progress.
+                </p>
+              </div>
+              <div>
+                <h5>Products</h5>
+                <a href="/#chrome">Chrome</a>
+                <a href="/#cloud">Cloud</a>
+                <a href="/#marketplace">Marketplace</a>
+              </div>
+              <div>
+                <h5>Company</h5>
+                <a href="mailto:hello@clinkdeck.com">Contact</a>
+                <a href="mailto:hello@clinkdeck.com?subject=Support">Support</a>
+                <a href="/#faq">FAQ</a>
+              </div>
+              <div>
+                <h5>Legal</h5>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+              </div>
             </div>
-            <span>A showcase, not a marketplace. No payments handled here.</span>
+            <div className="legal">
+              <span>
+                © 2026 Clinkdeck. Clinkdeck is not yet an authorized Google reseller —
+                authorization is in progress. Google, Chrome, Google Cloud and related marks are
+                trademarks of Google LLC.
+              </span>
+              <span>hello@clinkdeck.com</span>
+            </div>
           </div>
         </footer>
         <Analytics />
