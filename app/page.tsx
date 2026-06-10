@@ -22,8 +22,11 @@ export default function Home() {
           <a className="btn btn-primary" href="#chrome">
             Browse the catalog →
           </a>
-          <a className="btn btn-ghost" href="#cloud">
-            Talk to a specialist
+          <a
+            className="btn btn-ghost"
+            href="mailto:hello@clinkdeck.com?subject=Free%20Google%20bill%20audit&body=Hi%20Clinkdeck%20%E2%80%94%20I%27d%20like%20a%20free%2015-minute%20look%20at%20our%20Google%2Femail%20setup.%0A%0ACompany%3A%20%0ATeam%20size%3A%20%0ACurrent%20email%20provider%3A%20"
+          >
+            Get a free Google bill audit
           </a>
         </div>
         <div className="rating">
