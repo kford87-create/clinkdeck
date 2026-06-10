@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Clinkdeck — Google Chrome, Cloud & Marketplace products",
   description:
-    "Your single storefront for Google Chrome, Google Cloud, and Google Workspace Marketplace products. Clinkdeck is in the process of becoming an authorized Google reseller.",
+    "Your single storefront for Google Chrome, Google Cloud, and Google Workspace Marketplace products. Clinkdeck is an authorized Google reseller.",
 };
 
 export default function RootLayout({
@@ -45,7 +45,7 @@ export default function RootLayout({
                 </div>
                 <p style={{ maxWidth: 260 }}>
                   Your storefront for Google Chrome, Cloud, and Marketplace products.
-                  Authorized-reseller verification in progress.
+                  Authorized Google reseller.
                 </p>
               </div>
               <div>
@@ -68,9 +68,8 @@ export default function RootLayout({
             </div>
             <div className="legal">
               <span>
-                © 2026 Clinkdeck. Clinkdeck is not yet an authorized Google reseller —
-                authorization is in progress. Google, Chrome, Google Cloud and related marks are
-                trademarks of Google LLC.
+                © 2026 Clinkdeck, an authorized Google reseller. Google, Chrome, Google
+                Cloud and related marks are trademarks of Google LLC.
               </span>
               <span>hello@clinkdeck.com</span>
             </div>

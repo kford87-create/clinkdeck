@@ -6,7 +6,7 @@ export default function Home() {
       {/* HERO */}
       <header className="wrap hero">
         <span className="pill">
-          <span className="dot" /> Becoming an authorized Google reseller — verification in progress
+          <span className="dot" /> Authorized Google reseller
         </span>
         <h1>
           Buy Google products
@@ -15,8 +15,8 @@ export default function Home() {
         </h1>
         <p className="sub">
           Clinkdeck is your single storefront for Google Chrome, Google Cloud, and Google
-          Workspace Marketplace products. We&apos;re currently in the process of becoming an
-          authorized Google reseller — we are not authorized just yet.
+          Workspace Marketplace products — sold and supported by an authorized Google
+          reseller.
         </p>
         <div className="hero-cta">
           <a className="btn btn-primary" href="#chrome">
@@ -95,8 +95,8 @@ export default function Home() {
           <div className="features">
             <div className="feat">
               <div className="fic">🤝</div>
-              <h4>Authorization in progress</h4>
-              <p>We&apos;re completing official Google reseller verification — we are not an authorized reseller yet.</p>
+              <h4>Authorized Google reseller</h4>
+              <p>Clinkdeck is an authorized Google reseller — genuine licenses, provisioned and billed by us.</p>
             </div>
             <div className="feat">
               <div className="fic">🧾</div>
@@ -233,9 +233,9 @@ export default function Home() {
           <details open>
             <summary>Are you an authorized Google reseller?</summary>
             <p>
-              Not yet. Clinkdeck is currently in the process of becoming an authorized Google
-              reseller — verification is underway and is not yet complete. We&apos;ll update this
-              page the moment authorization is granted.
+              Yes. Clinkdeck is an authorized Google reseller. Licenses you buy through us
+              are genuine Google subscriptions, provisioned through Google&apos;s official
+              reseller channel and billed by Clinkdeck.
             </p>
           </details>
           <details>
